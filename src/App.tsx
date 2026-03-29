@@ -1,3 +1,9 @@
+import { Routes, Route, Link } from "react-router-dom";
+import NewArrivals from "./pages/NewArrivals";
+import Sneakers from "./pages/Sneakers";
+import Brands from "./pages/Brands";
+import Apparel from "./pages/Apparel";
+import Sale from "./pages/Sale";
 type Product = {
   id: number;
   brand: string;
@@ -80,14 +86,16 @@ function Header() {
   return (
     <header className="header">
       <div className="header__top">
-        <div className="logo">RESPECTMYKICKZ</div>
+        <Link to="/" className="logo">
+          RESPECTMYKICKZ
+        </Link>
 
         <nav className="nav">
-          <a href="#">New Arrivals</a>
-          <a href="#">Sneakers</a>
-          <a href="#">Brands</a>
-          <a href="#">Apparel</a>
-          <a href="#">Sale</a>
+          <Link to="/new-arrivals">New Arrivals</Link>
+          <Link to="/sneakers">Sneakers</Link>
+          <Link to="/brands">Brands</Link>
+          <Link to="/apparel">Apparel</Link>
+          <Link to="/sale">Sale</Link>
         </nav>
 
         <div className="header__actions">
@@ -112,8 +120,12 @@ function Hero() {
         </p>
 
         <div className="hero__actions">
-          <button className="dark-btn dark-btn--large">Shop Collection</button>
-          <button className="ghost-btn ghost-btn--large">Browse Latest</button>
+          <Link to="/sneakers" className="dark-btn dark-btn--large">
+            Shop Collection
+          </Link>
+          <Link to="/new-arrivals" className="ghost-btn ghost-btn--large">
+            Browse Latest
+          </Link>
         </div>
 
         <div className="hero__stats">
@@ -315,7 +327,7 @@ function Footer() {
   );
 }
 
-export default function App() {
+function HomePage() {
   return (
     <div className="site-shell">
       <AnnouncementBar />
@@ -327,5 +339,18 @@ export default function App() {
       <Newsletter />
       <Footer />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/new-arrivals" element={<NewArrivals />} />
+      <Route path="/sneakers" element={<Sneakers />} />
+      <Route path="/brands" element={<Brands />} />
+      <Route path="/apparel" element={<Apparel />} />
+      <Route path="/sale" element={<Sale />} />
+    </Routes>
   );
 }
