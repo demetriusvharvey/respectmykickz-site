@@ -53,9 +53,7 @@ export default function Contact() {
                   <div style={{fontSize:"24px", marginBottom:"10px"}}>📍</div>
                   <h4 style={{marginBottom:"6px"}}>Location</h4>
                   <p style={{color:"var(--text-secondary)", fontSize:"14px", lineHeight:1.6}}>
-                    Marketplace Mall<br />
-                    Rochester, NY<br />
-                    Inside the mall
+                    Online Only — DM on Instagram<br />or Text: 585-773-9393
                   </p>
                 </div>
 

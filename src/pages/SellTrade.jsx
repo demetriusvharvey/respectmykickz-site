@@ -3,7 +3,7 @@ import Navbar from "../components/global/Navbar";
 import Footer from "../components/global/Footer";
 
 const STEPS = [
-  { num: "01", title: "Bring It In", desc: "Drop by Marketplace Mall any day 12–8pm. No appointment needed." },
+  { num: "01", title: "Send Photos", desc: "Send us photos on Instagram or text us. No appointment, no hassle." },
   { num: "02", title: "We Authenticate", desc: "Every pair gets inspected for authenticity and condition on the spot." },
   { num: "03", title: "Get Your Offer", desc: "Instant cash offer or trade credit — your choice. No pressure." },
   { num: "04", title: "Walk Out Paid", desc: "Cash on the spot, or trade up to something fresh off the shelves." },
@@ -82,10 +82,10 @@ export default function SellTrade() {
             <div style={{background:"#111", borderRadius:"var(--radius-lg)", padding:"40px"}}>
               <h3 style={{color:"var(--white)", marginBottom:"24px"}}>Consignment Option</h3>
               <p style={{color:"rgba(255,255,255,0.5)", marginBottom:"20px", lineHeight:1.7, fontSize:"14px"}}>
-                Don't want to sell outright? We can list your pair in-store on consignment. You set the price, we sell it.
+                Don't want to sell outright? We can list your pair on our Instagram for consignment. You set the price, we handle the sale.
               </p>
               <div style={{display:"flex", flexDirection:"column", gap:"12px", marginBottom:"32px"}}>
-                {["No upfront fees","You set your asking price","We handle everything in-store","Paid when it sells"].map((pt) => (
+                {["No upfront fees","You set your asking price","We handle everything online","Paid when it sells"].map((pt) => (
                   <div key={pt} style={{display:"flex", alignItems:"center", gap:"10px", fontSize:"14px", color:"rgba(255,255,255,0.65)"}}>
                     <span style={{color:"var(--accent)", fontWeight:800}}>✓</span> {pt}
                   </div>
@@ -104,7 +104,7 @@ export default function SellTrade() {
             <p className="eyebrow eyebrow--accent" style={{marginBottom:"12px"}}>Ready?</p>
             <h2 style={{marginBottom:"16px"}}>Bring Your Pairs In Today</h2>
             <p style={{color:"var(--text-secondary)", marginBottom:"36px", maxWidth:"480px", margin:"0 auto 36px", lineHeight:1.7}}>
-              Walk into Marketplace Mall any day 12–8pm. Text us first if you have multiples.
+              DM us on Instagram or send a text. We move fast — same day offers on most pairs.
             </p>
             <div style={{display:"flex", gap:"12px", justifyContent:"center", flexWrap:"wrap"}}>
               <a href="sms:5857739393" className="btn btn-primary btn-lg">Text 585-773-9393</a>

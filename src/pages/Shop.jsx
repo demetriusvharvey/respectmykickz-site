@@ -22,7 +22,7 @@ export default function Shop() {
             <p className="eyebrow eyebrow--white" style={{marginBottom:"12px"}}>Respect My Kickz</p>
             <h1 style={{color:"var(--white)"}}>Shop All Sneakers</h1>
             <p style={{color:"rgba(255,255,255,0.5)", fontSize:"15px", marginTop:"12px"}}>
-              Authenticated. Updated daily. Available in-store &amp; online.
+              Authenticated. Updated daily. DM us on Instagram to grab your pair.
             </p>
           </div>
         </div>
