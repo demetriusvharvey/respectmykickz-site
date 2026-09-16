@@ -1,28 +1,29 @@
+import { Link } from "react-router-dom";
+import { formatMoney } from "../../integrations/shopifyClient";
+
 export default function SneakerCard({ item }) {
-  const badgeClass = item.badge === "Hot" || item.badge === "Preorder" ? "badge-red"
-    : item.badge === "Trending" ? "badge-black"
-    : "badge-gray";
+  const image = item.featuredImage?.url || item.image || item.images?.[0];
+  const imageAlt = item.featuredImage?.altText || item.title || item.name;
+  const price = item.priceRange?.minVariantPrice || (item.price ? { amount: String(item.price).replace(/[^0-9.]/g, ""), currencyCode: "USD" } : null);
+  const handle = item.handle || item.id;
+  const available = item.availableForSale !== false;
 
   return (
     <article className="sneaker-card">
-      <div className="sneaker-card__image-wrap">
-        {item.badge && <span className={`badge ${badgeClass} sneaker-card__badge`}>{item.badge}</span>}
-        <img src={item.image} alt={item.name} className="sneaker-card__image" loading="lazy" />
-      </div>
+      <Link to={`/products/${handle}`} className="sneaker-card__image-link" aria-label={`View ${item.title || item.name}`}>
+        <div className="sneaker-card__image-wrap">
+          {image
+            ? <img src={image} alt={imageAlt} className="sneaker-card__image" loading="lazy" />
+            : <div className="product-placeholder">No image</div>}
+          {!available && <span className="badge badge-black sneaker-card__badge">Sold Out</span>}
+        </div>
+      </Link>
       <div className="sneaker-card__body">
-        <p className="sneaker-card__brand">{item.brand}</p>
-        <h3 className="sneaker-card__name">{item.name}</h3>
-        <p className="sneaker-card__sizes">Sizes {item.sizes}</p>
+        <p className="sneaker-card__brand">{item.vendor || item.brand || "Respect My Kickz"}</p>
+        <Link to={`/products/${handle}`} className="sneaker-card__name">{item.title || item.name}</Link>
         <div className="sneaker-card__footer">
-          <span className="sneaker-card__price">{item.price}</span>
-          <a
-            href="https://respectmykickzny.company.site/products"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="sneaker-card__cta"
-          >
-            View
-          </a>
+          <span className="sneaker-card__price">{price ? formatMoney(price) : ""}</span>
+          <Link to={`/products/${handle}`} className="sneaker-card__cta">View</Link>
         </div>
       </div>
     </article>
