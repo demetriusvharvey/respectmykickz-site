@@ -37,7 +37,7 @@ const PRODUCT_CARD_FIELDS = `
   availableForSale
   featuredImage { url altText }
   priceRange { minVariantPrice { ${MONEY} } }
-  options { name optionValues { name } }
+  options { name values }
 `;
 
 const CART_FIELDS = `
@@ -100,7 +100,7 @@ export async function getProduct(handle) {
         availableForSale
         featuredImage { url altText }
         images(first: 10) { nodes { url altText } }
-        options { name optionValues { name } }
+        options { name values }
         variants(first: 100) {
           nodes {
             id
