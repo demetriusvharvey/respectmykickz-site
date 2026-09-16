@@ -6,7 +6,7 @@ export const shopifyConfigured = Boolean(SHOP_DOMAIN && STOREFRONT_TOKEN);
 
 async function shopifyFetch(query, variables = {}) {
   if (!shopifyConfigured) {
-    throw new Error("Shopify storefront access has not been configured yet.");
+    throw new Error("Storefront unavailable.");
   }
 
   const response = await fetch(`https://${SHOP_DOMAIN}/api/${API_VERSION}/graphql.json`, {
@@ -20,7 +20,7 @@ async function shopifyFetch(query, variables = {}) {
 
   const payload = await response.json().catch(() => ({}));
   if (!response.ok) {
-    throw new Error(payload?.errors?.[0]?.message || `Shopify request failed (${response.status}).`);
+    throw new Error(payload?.errors?.[0]?.message || `Store request failed (${response.status}).`);
   }
   if (payload.errors?.length) {
     throw new Error(payload.errors.map((error) => error.message).join(" "));
@@ -60,7 +60,7 @@ const CART_FIELDS = `
           selectedOptions { name value }
           image { url altText }
           price { ${MONEY} }
-          product { handle title vendor }
+          product { handle title vendor featuredImage { url altText } }
         }
       }
     }
