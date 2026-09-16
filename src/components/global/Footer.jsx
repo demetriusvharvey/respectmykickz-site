@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-const IG = "https://www.instagram.com/official_respectmykickz_/";
+const IG = "https://www.instagram.com/respectmykickz/";
 
 export default function Footer() {
   const year = new Date().getFullYear();
