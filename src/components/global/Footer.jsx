@@ -9,18 +9,18 @@ export default function Footer() {
         <div>
           <div className="footer__logo">RESPECT<span>MY</span>KICKZ</div>
           <p className="footer__about">
-            Authentic sneakers. Buy, sell, and trade exclusive kicks. We operate fully online — shop us on Instagram for the latest pairs.
+            Online-only sneaker drops focused on exclusive inventory, new releases, and authenticated pairs. Inventory changes as new product lands.
           </p>
           <div className="footer__contact">
-            <div>📱 DM on Instagram to order</div>
+            <div>Online only · No retail store hours</div>
             <div>💬 Text: <a href="sms:5857739393" style={{color:"rgba(250,250,248,0.55)"}}>585-773-9393</a></div>
           </div>
         </div>
         <div>
           <div className="footer__col-title">Shop</div>
           <div className="footer__links">
-            <a href={IG} target="_blank" rel="noopener noreferrer">Shop on Instagram ↗</a>
-            <Link to="/shop">Browse Pairs</Link>
+            <Link to="/shop">Current Drop</Link>
+            <Link to="/cart">Cart</Link>
             <Link to="/sell-trade">Sell or Trade</Link>
           </div>
         </div>
@@ -28,13 +28,13 @@ export default function Footer() {
           <div className="footer__col-title">Info</div>
           <div className="footer__links">
             <Link to="/contact">Contact</Link>
-            <a href={IG} target="_blank" rel="noopener noreferrer">@official_respectmykickz_</a>
+            <a href={IG} target="_blank" rel="noopener noreferrer">Drop Alerts on Instagram ↗</a>
           </div>
         </div>
       </div>
       <div className="footer__bottom">
         <span className="footer__copy">© {year} Respect My Kickz. All rights reserved.</span>
-        <a href={IG} target="_blank" rel="noopener noreferrer" className="footer__copy" style={{color:"rgba(250,250,248,0.35)"}}>Instagram ↗</a>
+        <span className="footer__copy">Secure online checkout powered by Shopify</span>
       </div>
     </footer>
   );
