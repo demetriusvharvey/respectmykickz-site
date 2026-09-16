@@ -1,16 +1,34 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import AnnouncementBar from "../components/global/AnnouncementBar";
 import Navbar from "../components/global/Navbar";
 import Footer from "../components/global/Footer";
 import SneakerCard from "../components/sneakers/SneakerCard";
-import { PRODUCTS, BRANDS } from "../data/products";
+import { getProducts, shopifyConfigured } from "../integrations/shopifyClient";
 
 export default function Shop() {
+  const [products, setProducts] = useState([]);
   const [active, setActive] = useState("All");
+  const [loading, setLoading] = useState(shopifyConfigured);
+  const [error, setError] = useState("");
 
-  const filtered = active === "All"
-    ? PRODUCTS
-    : PRODUCTS.filter((p) => p.brand === active);
+  useEffect(() => {
+    if (!shopifyConfigured) {
+      setLoading(false);
+      return;
+    }
+
+    let mounted = true;
+    setLoading(true);
+    getProducts(50)
+      .then((items) => mounted && setProducts(items || []))
+      .catch((err) => mounted && setError(err?.message || "Unable to load inventory."))
+      .finally(() => mounted && setLoading(false));
+
+    return () => { mounted = false; };
+  }, []);
+
+  const brands = useMemo(() => ["All", ...Array.from(new Set(products.map((p) => p.vendor).filter(Boolean))).sort()], [products]);
+  const filtered = active === "All" ? products : products.filter((p) => p.vendor === active);
 
   return (
     <div className="site-shell">
@@ -22,31 +40,50 @@ export default function Shop() {
             <p className="eyebrow eyebrow--white" style={{marginBottom:"12px"}}>Respect My Kickz</p>
             <h1 style={{color:"var(--white)"}}>Shop All Sneakers</h1>
             <p style={{color:"rgba(255,255,255,0.5)", fontSize:"15px", marginTop:"12px"}}>
-              Authenticated. Updated daily. DM us on Instagram to grab your pair.
+              Authentic pairs, live availability, and secure Shopify checkout.
             </p>
           </div>
         </div>
 
         <div className="container">
-          <div className="filter-bar">
-            <span style={{fontSize:"12px", fontWeight:600, color:"var(--text-muted)", marginRight:"8px", textTransform:"uppercase", letterSpacing:"0.1em"}}>Brand:</span>
-            {BRANDS.map((b) => (
-              <button
-                key={b}
-                className={`filter-chip${active === b ? " active" : ""}`}
-                onClick={() => setActive(b)}
-              >
-                {b}
-              </button>
-            ))}
-            <span style={{marginLeft:"auto", fontSize:"12px", color:"var(--text-muted)"}}>
-              {filtered.length} pairs
-            </span>
-          </div>
+          {!shopifyConfigured && (
+            <div className="store-state store-state--spaced">
+              <h2>Online inventory is being connected.</h2>
+              <p>The storefront build is complete and waiting on the final Shopify Storefront API connection.</p>
+            </div>
+          )}
 
-          <div className="product-grid" style={{marginBottom:"80px"}}>
-            {filtered.map((p) => <SneakerCard key={p.id} item={p} />)}
-          </div>
+          {loading && <div className="store-state store-state--spaced"><p>Loading the latest inventory…</p></div>}
+          {error && <div className="store-state store-state--error store-state--spaced"><p>{error}</p></div>}
+
+          {shopifyConfigured && !loading && !error && products.length === 0 && (
+            <div className="store-state store-state--spaced">
+              <h2>New inventory is on the way.</h2>
+              <p>There are no products published to the online store yet. Check back as pairs are added.</p>
+            </div>
+          )}
+
+          {products.length > 0 && (
+            <>
+              <div className="filter-bar">
+                <span style={{fontSize:"12px", fontWeight:600, color:"var(--text-muted)", marginRight:"8px", textTransform:"uppercase", letterSpacing:"0.1em"}}>Brand:</span>
+                {brands.map((brand) => (
+                  <button
+                    key={brand}
+                    className={`filter-chip${active === brand ? " active" : ""}`}
+                    onClick={() => setActive(brand)}
+                  >
+                    {brand}
+                  </button>
+                ))}
+                <span style={{marginLeft:"auto", fontSize:"12px", color:"var(--text-muted)"}}>{filtered.length} pairs</span>
+              </div>
+
+              <div className="product-grid" style={{marginBottom:"80px"}}>
+                {filtered.map((product) => <SneakerCard key={product.id} item={product} />)}
+              </div>
+            </>
+          )}
 
           <div style={{
             background:"var(--black)", color:"var(--white)",
@@ -56,13 +93,9 @@ export default function Shop() {
           }}>
             <div>
               <h3 style={{color:"var(--white)", marginBottom:"8px"}}>Don't See Your Size?</h3>
-              <p style={{color:"rgba(255,255,255,0.5)", fontSize:"14px"}}>
-                Text us and we'll source it. We preorder exclusive drops daily.
-              </p>
+              <p style={{color:"rgba(255,255,255,0.5)", fontSize:"14px"}}>Text us and we'll source it. We preorder exclusive drops daily.</p>
             </div>
-            <a href="sms:5857739393" className="btn btn-accent btn-lg">
-              Text Us: 585-773-9393
-            </a>
+            <a href="sms:5857739393" className="btn btn-accent btn-lg">Text Us: 585-773-9393</a>
           </div>
         </div>
       </main>
