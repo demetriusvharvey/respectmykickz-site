@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useCart } from "../../store/CartContext";
 
 const IG = "https://www.instagram.com/official_respectmykickz_/";
 const LINKS = [
@@ -11,6 +12,7 @@ const LINKS = [
 
 export default function Navbar() {
   const { pathname } = useLocation();
+  const { count } = useCart();
   const [open, setOpen] = useState(false);
 
   function close() { setOpen(false); }
@@ -26,49 +28,26 @@ export default function Navbar() {
           ))}
         </nav>
 
-        <a href={IG} target="_blank" rel="noopener noreferrer" className="nav__ig">Instagram ↗</a>
+        <div className="nav__actions">
+          <Link to="/cart" className="nav__cart" aria-label={`Cart with ${count} item${count === 1 ? "" : "s"}`}>
+            Cart <span>{count}</span>
+          </Link>
+          <a href={IG} target="_blank" rel="noopener noreferrer" className="nav__ig">Instagram ↗</a>
+        </div>
         <button className="nav__mob" onClick={() => setOpen(!open)} aria-label="Menu">
           {open ? "✕" : "☰"}
         </button>
       </div>
 
-      {/* Mobile dropdown */}
       {open && (
-        <div style={{
-          position: "absolute", top: "58px", left: 0, right: 0,
-          background: "var(--black)", zIndex: 99,
-          borderBottom: "1px solid rgba(250,250,248,0.1)",
-        }}>
+        <div className="nav__mobile-menu">
           {LINKS.map((l) => (
-            <Link
-              key={l.to} to={l.to}
-              onClick={close}
-              style={{
-                display: "block",
-                padding: "18px 24px",
-                fontFamily: "var(--font-display)",
-                fontSize: "1.4rem", fontWeight: 900,
-                textTransform: "uppercase", letterSpacing: "0.08em",
-                color: pathname === l.to ? "var(--white)" : "rgba(250,250,248,0.5)",
-                borderBottom: "1px solid rgba(250,250,248,0.07)",
-              }}
-            >
+            <Link key={l.to} to={l.to} onClick={close} className={pathname === l.to ? "active" : ""}>
               {l.label}
             </Link>
           ))}
-          <a
-            href={IG} target="_blank" rel="noopener noreferrer"
-            onClick={close}
-            style={{
-              display: "block", padding: "18px 24px",
-              fontFamily: "var(--font-display)",
-              fontSize: "1.4rem", fontWeight: 900,
-              textTransform: "uppercase", letterSpacing: "0.08em",
-              color: "var(--red)",
-            }}
-          >
-            Instagram ↗
-          </a>
+          <Link to="/cart" onClick={close}>Cart ({count})</Link>
+          <a href={IG} target="_blank" rel="noopener noreferrer" onClick={close}>Instagram ↗</a>
         </div>
       )}
     </header>
