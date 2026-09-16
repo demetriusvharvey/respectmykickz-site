@@ -5,6 +5,8 @@ import Footer from "../components/global/Footer";
 import SneakerCard from "../components/sneakers/SneakerCard";
 import { getProducts, shopifyConfigured } from "../integrations/shopifyClient";
 
+const IG = "https://www.instagram.com/respectmykickz/";
+
 export default function Shop() {
   const [products, setProducts] = useState([]);
   const [active, setActive] = useState("All");
@@ -59,12 +61,7 @@ export default function Shop() {
               <p style={{maxWidth:"560px", margin:"0 auto 24px", color:"var(--text-muted)"}}>
                 Respect My Kickz releases limited inventory as new pairs come in. Follow the release feed so you know when the next drop goes live.
               </p>
-              <a
-                href="https://www.instagram.com/official_respectmykickz_/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn--black"
-              >
+              <a href={IG} target="_blank" rel="noopener noreferrer" className="btn btn--black">
                 Follow Release Alerts ↗
               </a>
             </section>
