@@ -5,9 +5,9 @@ import Navbar from "../components/global/Navbar";
 import Footer from "../components/global/Footer";
 import { formatMoney, getProducts, shopifyConfigured } from "../integrations/shopifyClient";
 
-const IG = "https://www.instagram.com/official_respectmykickz_/";
+const IG = "https://www.instagram.com/respectmykickz/";
 const EDITORIAL = [
-  "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1400&q=86",
+  "https://cdn.shopify.com/s/files/1/0761/3408/8876/files/respectmykickz-exclusive-hero.png?v=1789583393",
   "https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?auto=format&fit=crop&w=900&q=86",
   "https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=900&q=86",
 ];
@@ -42,8 +42,8 @@ export default function Home() {
               <a href={IG} target="_blank" rel="noopener noreferrer" className="btn btn--ghost-white btn--lg">Follow Drops ↗</a>
             </div>
           </div>
-          <div className="drop-hero__visual" aria-label="Editorial sneaker imagery">
-            <img src={EDITORIAL[0]} alt="Editorial sneaker detail" />
+          <div className="drop-hero__visual" aria-label="Exclusive sneaker editorial imagery">
+            <img src={EDITORIAL[0]} alt="Exclusive sneaker editorial hero" />
             <div className="drop-hero__stamp">LIMITED<br />ONLINE<br />DROPS</div>
           </div>
         </section>
@@ -89,7 +89,7 @@ export default function Home() {
                 <h3>NEXT RELEASE LOADING.</h3>
                 <p>Inventory goes live only when real pairs are available. Follow Instagram for release alerts.</p>
               </div>
-              <a href={IG} target="_blank" rel="noopener noreferrer" className="btn btn--black">Follow @official_respectmykickz_ ↗</a>
+              <a href={IG} target="_blank" rel="noopener noreferrer" className="btn btn--black">Follow @respectmykickz ↗</a>
             </div>
           )}
         </section>
@@ -117,7 +117,7 @@ export default function Home() {
             <span className="drop-kicker">Stay ahead of the next pair</span>
             <h2>DROP ALERTS LIVE ON IG.</h2>
           </div>
-          <a href={IG} target="_blank" rel="noopener noreferrer" className="btn btn--ghost-white btn--lg">@official_respectmykickz_ ↗</a>
+          <a href={IG} target="_blank" rel="noopener noreferrer" className="btn btn--ghost-white btn--lg">@respectmykickz ↗</a>
         </section>
       </main>
       <Footer />
