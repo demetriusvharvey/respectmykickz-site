@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useCart } from "../../store/CartContext";
 
-const IG = "https://www.instagram.com/official_respectmykickz_/";
+const IG = "https://www.instagram.com/respectmykickz/";
 const LINKS = [
   { to: "/", label: "Home" },
   { to: "/shop", label: "Browse" },
