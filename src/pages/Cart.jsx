@@ -30,18 +30,18 @@ export default function Cart() {
 
           {!configured && (
             <div className="store-state">
-              <h2>Checkout is almost ready.</h2>
-              <p>The store is waiting on the final Shopify Storefront API connection.</p>
+              <h2>Checkout is temporarily unavailable.</h2>
+              <p>Please check back shortly or contact Respect My Kickz for help.</p>
             </div>
           )}
 
-          {error && <div className="store-state store-state--error"><p>{error}</p></div>}
+          {error && <div className="store-state store-state--error"><p>We couldn't update your cart. Please try again.</p></div>}
 
           {configured && !lines.length && !loading && (
             <div className="store-state">
               <h2>Your cart is empty.</h2>
-              <p>Browse the latest inventory and choose your pair.</p>
-              <Link to="/shop" className="btn btn--black">Shop Sneakers</Link>
+              <p>Browse the current drop and choose your pair.</p>
+              <Link to="/shop" className="btn btn--black">Shop Current Drop</Link>
             </div>
           )}
 
@@ -55,7 +55,7 @@ export default function Cart() {
                       <div className="cart-line__image">
                         {merchandise?.image?.url
                           ? <img src={merchandise.image.url} alt={merchandise.image.altText || merchandise.product?.title || "Sneaker"} />
-                          : <div className="product-placeholder">No image</div>}
+                          : <div className="product-placeholder">Image unavailable</div>}
                       </div>
                       <div className="cart-line__info">
                         <p className="sneaker-card__brand">{merchandise?.product?.vendor}</p>
