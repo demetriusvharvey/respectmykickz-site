@@ -9,7 +9,6 @@ export default function Shop() {
   const [products, setProducts] = useState([]);
   const [active, setActive] = useState("All");
   const [loading, setLoading] = useState(shopifyConfigured);
-  const [error, setError] = useState("");
 
   useEffect(() => {
     if (!shopifyConfigured) {
@@ -21,7 +20,7 @@ export default function Shop() {
     setLoading(true);
     getProducts(50)
       .then((items) => mounted && setProducts(items || []))
-      .catch((err) => mounted && setError(err?.message || "Unable to load inventory."))
+      .catch(() => mounted && setProducts([]))
       .finally(() => mounted && setLoading(false));
 
     return () => { mounted = false; };
@@ -29,38 +28,46 @@ export default function Shop() {
 
   const brands = useMemo(() => ["All", ...Array.from(new Set(products.map((p) => p.vendor).filter(Boolean))).sort()], [products]);
   const filtered = active === "All" ? products : products.filter((p) => p.vendor === active);
+  const betweenDrops = !loading && products.length === 0;
 
   return (
     <div className="site-shell">
       <AnnouncementBar />
       <Navbar />
       <main>
-        <div style={{background:"var(--black)", color:"var(--white)", padding:"56px 0 48px"}}>
+        <section style={{background:"var(--black)", color:"var(--white)", padding:"64px 0 56px"}}>
           <div className="container">
             <p className="eyebrow eyebrow--white" style={{marginBottom:"12px"}}>Respect My Kickz</p>
-            <h1 style={{color:"var(--white)"}}>Shop All Sneakers</h1>
-            <p style={{color:"rgba(255,255,255,0.5)", fontSize:"15px", marginTop:"12px"}}>
-              Authentic pairs, live availability, and secure Shopify checkout.
+            <h1 style={{color:"var(--white)"}}>Current Drop</h1>
+            <p style={{color:"rgba(255,255,255,0.58)", fontSize:"15px", marginTop:"12px", maxWidth:"620px"}}>
+              Limited pairs. Live sizes. Secure Shopify checkout. When a release sells through, it leaves the site.
             </p>
           </div>
-        </div>
+        </section>
 
         <div className="container">
-          {!shopifyConfigured && (
+          {loading && (
             <div className="store-state store-state--spaced">
-              <h2>Online inventory is being connected.</h2>
-              <p>The storefront build is complete and waiting on the final Shopify Storefront API connection.</p>
+              <p>Loading current release…</p>
             </div>
           )}
 
-          {loading && <div className="store-state store-state--spaced"><p>Loading the latest inventory…</p></div>}
-          {error && <div className="store-state store-state--error store-state--spaced"><p>{error}</p></div>}
-
-          {shopifyConfigured && !loading && !error && products.length === 0 && (
-            <div className="store-state store-state--spaced">
-              <h2>New inventory is on the way.</h2>
-              <p>There are no products published to the online store yet. Check back as pairs are added.</p>
-            </div>
+          {betweenDrops && (
+            <section className="store-state store-state--spaced" style={{textAlign:"center", padding:"72px 28px"}}>
+              <p className="eyebrow" style={{marginBottom:"12px"}}>Between Drops</p>
+              <h2 style={{marginBottom:"12px"}}>No release is live right now.</h2>
+              <p style={{maxWidth:"560px", margin:"0 auto 24px", color:"var(--text-muted)"}}>
+                Respect My Kickz releases limited inventory as new pairs come in. Follow the release feed so you know when the next drop goes live.
+              </p>
+              <a
+                href="https://www.instagram.com/official_respectmykickz_/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn--black"
+              >
+                Follow Release Alerts ↗
+              </a>
+            </section>
           )}
 
           {products.length > 0 && (
@@ -85,18 +92,18 @@ export default function Shop() {
             </>
           )}
 
-          <div style={{
+          <section style={{
             background:"var(--black)", color:"var(--white)",
             borderRadius:"var(--radius-lg)", padding:"48px 40px",
             display:"flex", alignItems:"center", justifyContent:"space-between",
             flexWrap:"wrap", gap:"24px", marginBottom:"80px"
           }}>
             <div>
-              <h3 style={{color:"var(--white)", marginBottom:"8px"}}>Don't See Your Size?</h3>
-              <p style={{color:"rgba(255,255,255,0.5)", fontSize:"14px"}}>Text us and we'll source it. We preorder exclusive drops daily.</p>
+              <h3 style={{color:"var(--white)", marginBottom:"8px"}}>Looking for a specific pair?</h3>
+              <p style={{color:"rgba(255,255,255,0.5)", fontSize:"14px"}}>Text us your size and what you're looking for. We source exclusive pairs and upcoming releases.</p>
             </div>
             <a href="sms:5857739393" className="btn btn-accent btn-lg">Text Us: 585-773-9393</a>
-          </div>
+          </section>
         </div>
       </main>
       <Footer />
