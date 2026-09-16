@@ -17,9 +17,12 @@ export default function Home() {
   const [loading, setLoading] = useState(shopifyConfigured);
 
   useEffect(() => {
-    if (!shopifyConfigured) return;
-    getProducts(4)
-      .then(setDrops)
+    if (!shopifyConfigured) {
+      setLoading(false);
+      return;
+    }
+    getProducts(12)
+      .then((items) => setDrops((items || []).filter((product) => product.featuredImage?.url).slice(0, 4)))
       .catch(() => setDrops([]))
       .finally(() => setLoading(false));
   }, []);
@@ -42,8 +45,8 @@ export default function Home() {
               <a href={IG} target="_blank" rel="noopener noreferrer" className="btn btn--ghost-white btn--lg">Follow Drops ↗</a>
             </div>
           </div>
-          <div className="drop-hero__visual" aria-label="Exclusive sneaker editorial imagery">
-            <img src={EDITORIAL[0]} alt="Exclusive sneaker editorial hero" />
+          <div className="drop-hero__visual" aria-label="Editorial sneaker imagery">
+            <img src={EDITORIAL[0]} alt="Exclusive sneaker editorial" />
             <div className="drop-hero__stamp">LIMITED<br />ONLINE<br />DROPS</div>
           </div>
         </section>
@@ -68,11 +71,7 @@ export default function Home() {
               {drops.map((product) => (
                 <Link to={`/products/${product.handle}`} className="drop-product" key={product.id}>
                   <div className="drop-product__image">
-                    {product.featuredImage?.url ? (
-                      <img src={product.featuredImage.url} alt={product.featuredImage.altText || product.title} />
-                    ) : (
-                      <div className="drop-product__placeholder">RMK</div>
-                    )}
+                    <img src={product.featuredImage.url} alt={product.featuredImage.altText || product.title} />
                     {!product.availableForSale && <span className="drop-product__sold">SOLD OUT</span>}
                   </div>
                   <div className="drop-product__meta">
@@ -86,8 +85,8 @@ export default function Home() {
             <div className="drop-empty drop-empty--editorial">
               <div>
                 <span className="drop-kicker drop-kicker--dark">Between drops</span>
-                <h3>NEXT RELEASE LOADING.</h3>
-                <p>Inventory goes live only when real pairs are available. Follow Instagram for release alerts.</p>
+                <h3>NO RELEASE IS LIVE.</h3>
+                <p>Inventory appears here only when real pairs with complete product details are available. Follow Instagram for release alerts.</p>
               </div>
               <a href={IG} target="_blank" rel="noopener noreferrer" className="btn btn--black">Follow @respectmykickz ↗</a>
             </div>
